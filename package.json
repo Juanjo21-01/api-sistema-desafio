@@ -2,8 +2,11 @@
   "name": "api-sistema-desafio",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "Juan José Hernández López",
@@ -12,11 +15,15 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.7",
-    "eslint": "^9.16.0",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.5",
     "nodemon": "^3.1.7",
     "sequelize": "^6.37.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "eslint": "^9.16.0",
+    "globals": "^15.13.0"
   }
 }
