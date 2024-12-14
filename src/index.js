@@ -1,27 +1,10 @@
-import dotenv from 'dotenv';
-import process from 'process';
-import express, { json } from 'express';
-
-// Configurar variables de entorno
-dotenv.config();
-
-// Crear servidor
-const app = express();
-
-// Middleware para convertir el body en JSON
-app.use(json());
-
-// Puerto del servidor
-const PORT = process.env.PORT || 3000;
-
-console.log(PORT);
-
-// Rutas
-app.get('/', (req, res) => {
-  res.send('Hola mundo');
-});
+import app from './app.js';
+import { conexionBD } from './config/db.js';
 
 // Iniciar servidor
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
+app.listen(app.get('port'), () => {
+  console.log(`Servidor corriendo en http://localhost:${app.get('port')}`);
 });
+
+// Conectar a la base de datos
+conexionBD();
