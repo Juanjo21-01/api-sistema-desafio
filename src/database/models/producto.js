@@ -1,68 +1,68 @@
 import { Model } from 'sequelize';
 
-// MODELO DE USUARIOS
+// MODELO DE PRODUCTOS
 export default (sequelize, DataTypes) => {
   // Definición
-  class Usuario extends Model {
+  class Producto extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // Relación muchos a uno con la tabla de roles
-      Usuario.belongsTo(models.Role, {
-        foreignKey: 'rol_id',
-        as: 'role',
+      // Relación muchos a uno con la tabla de tipo de productos
+      Producto.belongsTo(models.TipoProducto, {
+        foreignKey: 'tipo_producto_id',
+        as: 'tipo_producto',
       });
 
-      // Relación uno a muchos con la tabla de productos
-      Usuario.hasMany(models.Producto, {
+      // Relación muchos a uno con la tabla de usuarios
+      Producto.belongsTo(models.Usuario, {
         foreignKey: 'usuario_id',
-        as: 'productos',
+        as: 'usuario',
       });
     }
   }
 
   // Inicialización
-  Usuario.init(
+  Producto.init(
     {
-      nombres: {
+      nombre: {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
-      apellidos: {
-        type: DataTypes.STRING(50),
+      tipo_producto_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      email: {
+      marca: {
+        type: DataTypes.STRING(50),
+        allowNull: true,
+      },
+      codigo: {
         type: DataTypes.STRING(255),
         allowNull: false,
         unique: true,
       },
-      password: {
-        type: DataTypes.STRING(255),
+      precio_unitario: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+      },
+      stock: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       estado: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
-      direccion: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-      },
-      telefono: {
-        type: DataTypes.STRING(8),
-        allowNull: false,
-      },
-      fecha_nacimiento: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      },
-      rol_id: {
+      usuario_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      foto: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
       },
       fecha_registro: {
         type: DataTypes.DATE,
@@ -72,11 +72,11 @@ export default (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Usuario',
-      tableName: 'usuarios',
+      modelName: 'Producto',
+      tableName: 'productos',
       timestamps: false,
     }
   );
 
-  return Usuario;
+  return Producto;
 };
