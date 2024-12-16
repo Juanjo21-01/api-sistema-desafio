@@ -21,6 +21,12 @@ export default (sequelize, DataTypes) => {
         foreignKey: 'usuario_id',
         as: 'usuario',
       });
+
+      // Relación uno a muchos con la tabla de detalle de compras
+      Producto.hasMany(models.DetalleCompra, {
+        foreignKey: 'producto_id',
+        as: 'detalle_compras',
+      });
     }
   }
 

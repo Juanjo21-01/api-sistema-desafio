@@ -10,7 +10,11 @@ export default (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      // Relación uno a muchos con compras
+      Proveedor.hasMany(models.Compra, {
+        foreignKey: 'proveedor_id',
+        as: 'compras',
+      });
     }
   }
 
