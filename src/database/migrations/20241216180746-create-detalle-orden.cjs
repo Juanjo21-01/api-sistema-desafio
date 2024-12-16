@@ -2,21 +2,21 @@
 
 /** @type {import('sequelize-cli').Migration} */
 
-// Migración de la tabla de detalle de compras
+// Migración de la tabla de detalle de ordenes
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('detalle_compras', {
+    await queryInterface.createTable('detalle_ordenes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      compra_id: {
+      orden_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'compras',
+          model: 'ordenes',
           key: 'id',
         },
       },
@@ -40,6 +40,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('detalle_compras');
+    await queryInterface.dropTable('detalle_ordenes');
   },
 };
