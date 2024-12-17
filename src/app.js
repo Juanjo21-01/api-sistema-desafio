@@ -2,6 +2,8 @@ import { config } from 'dotenv';
 import process from 'process';
 import express, { json } from 'express';
 import morgan from 'morgan';
+import rutaRoles from './routes/roles.routes.js';
+import rutaUsuarios from './routes/usuarios.routes.js';
 
 // Configurar variables de entorno
 config();
@@ -17,9 +19,14 @@ app.use(morgan('dev'));
 // Puerto del servidor
 app.set('port', process.env.PORT || 3000);
 
-// Rutas
+// RUTAS
 app.get('/', (req, res) => {
-  res.send('Hola mundo ');
+  res.send('Desafío 360 - API REST');
 });
+
+// -> Rutas de roles
+app.use('/api', rutaRoles);
+// -> Rutas de usuarios
+app.use('/api', rutaUsuarios);
 
 export default app;
