@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       fecha_venta: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
       estado: {
@@ -33,9 +33,9 @@ module.exports = {
         },
       },
       fecha_registro: {
-        type: Sequelize.DATE,
+        type: 'DATETIME',
         allowNull: false,
-        defaultValue: Sequelize.NOW,
+        defaultValue: queryInterface.sequelize.literal('GETDATE()'),
       },
     });
   },

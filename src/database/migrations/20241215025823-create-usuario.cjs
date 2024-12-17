@@ -42,7 +42,7 @@ module.exports = {
         allowNull: false,
       },
       fecha_nacimiento: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: true,
       },
       rol_id: {
@@ -54,9 +54,9 @@ module.exports = {
         },
       },
       fecha_registro: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
-        allowNull: true,
+        type: 'DATETIME',
+        allowNull: false,
+        defaultValue: queryInterface.sequelize.literal('GETDATE()'),
       },
     });
   },

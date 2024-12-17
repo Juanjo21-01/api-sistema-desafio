@@ -75,7 +75,7 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
       },
       fecha_nacimiento: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: true,
       },
       rol_id: {
@@ -83,7 +83,7 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
       },
       fecha_registro: {
-        type: DataTypes.DATE,
+        type: 'DATETIME',
         defaultValue: DataTypes.NOW,
         allowNull: false,
       },

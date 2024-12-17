@@ -33,7 +33,6 @@ module.exports = {
           telefono: process.env.ADMIN_TELEFONO,
           fecha_nacimiento: process.env.ADMIN_FECHA || null,
           rol_id: 1,
-          fecha_registro: new Date(),
         },
       ],
       {}

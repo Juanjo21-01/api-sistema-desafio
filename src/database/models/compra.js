@@ -34,7 +34,7 @@ export default (sequelize, DataTypes) => {
   Compra.init(
     {
       fecha_compra: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       estado: {
@@ -54,7 +54,7 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
       },
       fecha_registro: {
-        type: DataTypes.DATE,
+        type: 'DATETIME',
         defaultValue: DataTypes.NOW,
         allowNull: false,
       },

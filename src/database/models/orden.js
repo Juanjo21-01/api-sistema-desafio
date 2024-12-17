@@ -28,7 +28,7 @@ export default (sequelize, DataTypes) => {
   Orden.init(
     {
       fecha_orden: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       cliente_id: {
@@ -46,6 +46,11 @@ export default (sequelize, DataTypes) => {
       observaciones: {
         type: DataTypes.STRING(200),
         allowNull: true,
+      },
+      fecha_registro: {
+        type: 'DATETIME',
+        defaultValue: DataTypes.NOW,
+        allowNull: false,
       },
     },
     {

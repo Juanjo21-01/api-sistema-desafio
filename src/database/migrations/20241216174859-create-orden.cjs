@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       fecha_orden: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
       cliente_id: {
@@ -32,6 +32,11 @@ module.exports = {
       observaciones: {
         type: Sequelize.STRING(200),
         allowNull: true,
+      },
+      fecha_registro: {
+        type: 'DATETIME',
+        allowNull: false,
+        defaultValue: queryInterface.sequelize.literal('GETDATE()'),
       },
     });
   },

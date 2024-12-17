@@ -58,9 +58,9 @@ module.exports = {
         allowNull: true,
       },
       fecha_registro: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        type: 'DATETIME',
         allowNull: false,
+        defaultValue: queryInterface.sequelize.literal('GETDATE()'),
       },
     });
   },

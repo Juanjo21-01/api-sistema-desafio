@@ -28,7 +28,7 @@ export default (sequelize, DataTypes) => {
   Venta.init(
     {
       fecha_venta: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       estado: {
@@ -44,7 +44,7 @@ export default (sequelize, DataTypes) => {
         allowNull: false,
       },
       fecha_registro: {
-        type: DataTypes.DATE,
+        type: 'DATETIME',
         allowNull: false,
         defaultValue: DataTypes.NOW,
       },

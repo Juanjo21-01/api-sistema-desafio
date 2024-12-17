@@ -83,7 +83,7 @@ export default (sequelize, DataTypes) => {
         allowNull: true,
       },
       fecha_registro: {
-        type: DataTypes.DATE,
+        type: 'DATETIME',
         defaultValue: DataTypes.NOW,
         allowNull: false,
       },
