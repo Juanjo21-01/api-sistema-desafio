@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import rutaRoles from './routes/roles.routes.js';
 import rutaUsuarios from './routes/usuarios.routes.js';
 import rutaProveedores from './routes/proveedores.routes.js';
+import rutaTipoProductos from './routes/tipoProductos.routes.js';
+import rutaProductos from './routes/productos.routes.js';
 
 // Configurar variables de entorno
 config();
@@ -31,5 +33,9 @@ app.use('/api', rutaRoles);
 app.use('/api', rutaUsuarios);
 // -> Rutas de proveedores
 app.use('/api', rutaProveedores);
+// -> Rutas de tipo de productos
+app.use('/api', rutaTipoProductos);
+// -> Rutas de productos
+app.use('/api', rutaProductos);
 
 export default app;
