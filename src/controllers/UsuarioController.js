@@ -136,9 +136,18 @@ export const cambiarEstadoUsuario = async (req, res) => {
       });
     }
 
+    // Procedimiento almacenado
+    const procedimiento = `EXEC sp_cambiar_estado_usuario :id, :estado`;
+
     // Cambiar estado
+    await db.sequelize.query(procedimiento, {
+      replacements: {
+        id: usuario.id,
+        estado: req.body.estado,
+      },
+    });
+
     usuario.estado = req.body.estado;
-    await usuario.save();
 
     // Respuesta
     res.status(200).json(usuario);

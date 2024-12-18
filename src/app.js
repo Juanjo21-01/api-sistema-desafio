@@ -4,6 +4,7 @@ import express, { json } from 'express';
 import morgan from 'morgan';
 import rutaRoles from './routes/roles.routes.js';
 import rutaUsuarios from './routes/usuarios.routes.js';
+import rutaProveedores from './routes/proveedores.routes.js';
 
 // Configurar variables de entorno
 config();
@@ -28,5 +29,7 @@ app.get('/', (req, res) => {
 app.use('/api', rutaRoles);
 // -> Rutas de usuarios
 app.use('/api', rutaUsuarios);
+// -> Rutas de proveedores
+app.use('/api', rutaProveedores);
 
 export default app;
