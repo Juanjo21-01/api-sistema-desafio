@@ -160,10 +160,7 @@ export const cambiarEstadoCompra = async (req, res) => {
 
     // Cambiar estado
     await db.sequelize.query(procedimiento, {
-      replacements: {
-        id: compra.id,
-        estado: req.body.estado,
-      },
+      replacements: { id: compra.id, estado: req.body.estado },
     });
 
     compra.estado = req.body.estado;

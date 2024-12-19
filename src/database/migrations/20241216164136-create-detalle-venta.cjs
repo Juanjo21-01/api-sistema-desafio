@@ -12,14 +12,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      cantidad: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      precio_unitario: {
-        type: Sequelize.DECIMAL(10, 2),
-        allowNull: false,
-      },
       venta_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -35,6 +27,14 @@ module.exports = {
           model: 'productos',
           key: 'id',
         },
+      },
+      cantidad: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      precio_unitario: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false,
       },
     });
   },

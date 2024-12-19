@@ -8,6 +8,7 @@ import rutaProveedores from './routes/proveedores.routes.js';
 import rutaTipoProductos from './routes/tipoProductos.routes.js';
 import rutaProductos from './routes/productos.routes.js';
 import rutaCompras from './routes/compras.routes.js';
+import rutaVentas from './routes/ventas.routes.js';
 
 // Configurar variables de entorno
 config();
@@ -40,5 +41,7 @@ app.use('/api', rutaTipoProductos);
 app.use('/api', rutaProductos);
 // -> Rutas de compras
 app.use('/api', rutaCompras);
+// -> Rutas de ventas
+app.use('/api', rutaVentas);
 
 export default app;

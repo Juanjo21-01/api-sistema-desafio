@@ -27,20 +27,20 @@ export default (sequelize, DataTypes) => {
   // Inicialización
   DetalleVenta.init(
     {
-      cantidad: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      precio_unitario: {
-        type: DataTypes.DECIMAL(10, 2),
-        allowNull: false,
-      },
       venta_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
       producto_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      cantidad: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      precio_unitario: {
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
     },
