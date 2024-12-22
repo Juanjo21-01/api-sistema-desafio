@@ -42,6 +42,74 @@ export const obtenerUsuario = async (req, res) => {
   }
 };
 
+// Crear un usuario
+export const crearUsuario = async (req, res) => {
+  try {
+    const {
+      nombres,
+      apellidos,
+      email,
+      password,
+      direccion,
+      telefono,
+      fecha_nacimiento,
+      rol_id,
+    } = req.body;
+
+    // Validar si el usuario ya existe
+    const usuarioExistente = await db.Usuario.findOne({ where: { email } });
+
+    if (usuarioExistente) {
+      return res.status(400).json({
+        mensaje: 'El correo electrónico ya está en uso, debes de utilizar otro',
+      });
+    }
+
+    // Validar si el rol es administrador
+    if (rol_id === 1) {
+      return res.status(400).json({
+        mensaje: 'No se puede registrar un usuario con rol de administrador',
+      });
+    }
+
+    // Encriptar contraseña
+    const salt = bcrypt.genSaltSync(10);
+    const passwordEncriptada = bcrypt.hashSync(password, salt);
+
+    // Procedimiento almacenado
+    const procedimiento =
+      'EXEC sp_insertar_usuario :nombres, :apellidos, :email, :password, :estado, :direccion, :telefono, :fecha_nacimiento, :rol_id';
+
+    // Crear usuario
+    await db.sequelize.query(procedimiento, {
+      replacements: {
+        nombres,
+        apellidos,
+        email,
+        password: passwordEncriptada,
+        estado: 1,
+        direccion,
+        telefono,
+        fecha_nacimiento,
+        rol_id,
+      },
+    });
+
+    // Obtener el usuario creado
+    const usuario = await db.Usuario.findOne({
+      where: { email },
+    });
+
+    // Respuesta
+    res
+      .status(201)
+      .json({ mensaje: 'Usuario registrado correctamente', usuario });
+  } catch (error) {
+    console.error('Error al registrar usuario:', error);
+    res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
 // Actualizar un usuario
 export const actualizarUsuario = async (req, res) => {
   try {

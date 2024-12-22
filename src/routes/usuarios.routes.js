@@ -3,6 +3,7 @@ import { verificarToken, verificarRol } from '../middlewares/authMiddleware.js';
 import {
   actualizarUsuario,
   cambiarEstadoUsuario,
+  crearUsuario,
   eliminarUsuario,
   obtenerUsuario,
   obtenerUsuarios,
@@ -15,6 +16,9 @@ router.get('/', verificarToken, verificarRol([1, 2]), obtenerUsuarios);
 
 // GET - Obtener un usuario por ID
 router.get('/:id', verificarToken, verificarRol([1, 2]), obtenerUsuario);
+
+// POST - Crear un usuario
+router.post('/', verificarToken, verificarRol([1, 2]), crearUsuario);
 
 // PUT - Actualizar un usuario
 router.put('/:id', verificarToken, verificarRol([1, 2]), actualizarUsuario);
