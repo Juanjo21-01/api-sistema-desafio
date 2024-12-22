@@ -10,6 +10,7 @@ import rutaProductos from './routes/productos.routes.js';
 import rutaCompras from './routes/compras.routes.js';
 import rutaVentas from './routes/ventas.routes.js';
 import rutaOrdenes from './routes/ordenes.routes.js';
+import rutaAuth from './routes/auth.routes.js';
 
 // Configurar variables de entorno
 config();
@@ -30,21 +31,24 @@ app.get('/', (req, res) => {
   res.send('Desafío 360 - API REST');
 });
 
+// -> Rutas de autenticación
+app.use('/api/auth', rutaAuth);
+
 // -> Rutas de roles
-app.use('/api', rutaRoles);
+app.use('/api/roles', rutaRoles);
 // -> Rutas de usuarios
-app.use('/api', rutaUsuarios);
+app.use('/api/usuarios', rutaUsuarios);
 // -> Rutas de proveedores
-app.use('/api', rutaProveedores);
+app.use('/api/proveedores', rutaProveedores);
 // -> Rutas de tipo de productos
-app.use('/api', rutaTipoProductos);
+app.use('/api/tipo-productos', rutaTipoProductos);
 // -> Rutas de productos
-app.use('/api', rutaProductos);
+app.use('/api/productos', rutaProductos);
 // -> Rutas de compras
-app.use('/api', rutaCompras);
+app.use('/api/compras', rutaCompras);
 // -> Rutas de ventas
 app.use('/api', rutaVentas);
 // -> Rutas de órdenes
-app.use('/api', rutaOrdenes);
+app.use('/api/ordenes', rutaOrdenes);
 
 export default app;

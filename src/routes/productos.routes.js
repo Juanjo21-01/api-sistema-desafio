@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { verificarToken, verificarRol } from '../middlewares/authMiddleware.js';
 import {
   actualizarProducto,
   cambiarEstadoProducto,
@@ -11,21 +12,26 @@ import {
 const router = Router();
 
 // GET - Obtener todos los productos
-router.get('/productos', obtenerProductos);
+router.get('/', verificarToken, verificarRol([1, 2, 3]), obtenerProductos);
 
 // GET - Obtener un producto por ID
-router.get('/productos/:id', obtenerProducto);
+router.get('/:id', verificarToken, verificarRol([1, 2, 3]), obtenerProducto);
 
 // POST - Crear un producto
-router.post('/productos', crearProducto);
+router.post('/', verificarToken, verificarRol([1, 2]), crearProducto);
 
 // PUT - Actualizar un producto
-router.put('/productos/:id', actualizarProducto);
+router.put('/:id', verificarToken, verificarRol([1, 2]), actualizarProducto);
 
-// PATCH - Actualizar estado de un producto
-router.patch('/productos/cambiarEstado/:id', cambiarEstadoProducto);
+// PATCH - Cambiar estado de un producto
+router.patch(
+  '/cambiarEstado/:id',
+  verificarToken,
+  verificarRol([1, 2]),
+  cambiarEstadoProducto
+);
 
 // DELETE - Eliminar un producto
-router.delete('/productos/:id', eliminarProducto);
+router.delete('/:id', verificarToken, verificarRol([1]), eliminarProducto);
 
 export default router;

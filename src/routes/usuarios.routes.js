@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { verificarToken, verificarRol } from '../middlewares/authMiddleware.js';
 import {
   actualizarUsuario,
   cambiarEstadoUsuario,
@@ -10,18 +11,23 @@ import {
 const router = Router();
 
 // GET - Obtener todos los usuarios
-router.get('/usuarios', obtenerUsuarios);
+router.get('/', verificarToken, verificarRol([1, 2]), obtenerUsuarios);
 
 // GET - Obtener un usuario por ID
-router.get('/usuarios/:id', obtenerUsuario);
+router.get('/:id', verificarToken, verificarRol([1, 2]), obtenerUsuario);
 
 // PUT - Actualizar un usuario
-router.put('/usuarios/:id', actualizarUsuario);
+router.put('/:id', verificarToken, verificarRol([1, 2]), actualizarUsuario);
 
-// PATCH - Actualizar estado de un usuario
-router.patch('/usuarios/cambiarEstado/:id', cambiarEstadoUsuario);
+// PATCH - Cambiar estado de un usuario
+router.patch(
+  '/cambiarEstado/:id',
+  verificarToken,
+  verificarRol([1, 2]),
+  cambiarEstadoUsuario
+);
 
 // DELETE - Eliminar un usuario
-router.delete('/usuarios/:id', eliminarUsuario);
+router.delete('/:id', verificarToken, verificarRol([1]), eliminarUsuario);
 
 export default router;

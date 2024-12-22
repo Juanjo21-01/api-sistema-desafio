@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { verificarToken, verificarRol } from '../middlewares/authMiddleware.js';
 import {
   actualizarProveedor,
   cambiarEstadoProveedor,
@@ -11,21 +12,26 @@ import {
 const router = Router();
 
 // GET - Obtener todos los proveedores
-router.get('/proveedores', obtenerProveedores);
+router.get('/', verificarToken, verificarRol([1, 2]), obtenerProveedores);
 
 // GET - Obtener un proveedor por ID
-router.get('/proveedores/:id', obtenerProveedor);
+router.get('/:id', verificarToken, verificarRol([1, 2]), obtenerProveedor);
 
 // POST - Crear un proveedor
-router.post('/proveedores', crearProveedor);
+router.post('/', verificarToken, verificarRol([1, 2]), crearProveedor);
 
 // PUT - Actualizar un proveedor
-router.put('/proveedores/:id', actualizarProveedor);
+router.put('/:id', verificarToken, verificarRol([1, 2]), actualizarProveedor);
 
-// PATCH - Actualizar estado de un proveedor
-router.patch('/proveedores/cambiarEstado/:id', cambiarEstadoProveedor);
+// PATCH - Cambiar estado de un proveedor
+router.patch(
+  '/cambiarEstado/:id',
+  verificarToken,
+  verificarRol([1, 2]),
+  cambiarEstadoProveedor
+);
 
 // DELETE - Eliminar un proveedor
-router.delete('/proveedores/:id', eliminarProveedor);
+router.delete('/:id', verificarToken, verificarRol([1]), eliminarProveedor);
 
 export default router;
