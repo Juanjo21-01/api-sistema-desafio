@@ -179,18 +179,6 @@ export const eliminarProducto = async (req, res) => {
       });
     }
 
-    // Si el producto tiene ventas
-    const ventas = await db.DetalleVenta.findAll({
-      where: { producto_id: id },
-    });
-
-    if (ventas.length) {
-      return res.status(400).json({
-        mensaje:
-          'No se puede eliminar el producto porque tiene ventas asociadas',
-      });
-    }
-
     // Si el producto tiene órdenes
     const ordenes = await db.DetalleOrden.findAll({
       where: { producto_id: id },

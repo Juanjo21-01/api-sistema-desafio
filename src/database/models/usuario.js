@@ -28,12 +28,6 @@ export default (sequelize, DataTypes) => {
         as: 'compras',
       });
 
-      // Relación uno a muchos con la tabla de ventas
-      Usuario.hasMany(models.Venta, {
-        foreignKey: 'usuario_id',
-        as: 'ventas',
-      });
-
       // Relación uno a muchos con la tabla de ordenes
       Usuario.hasMany(models.Orden, {
         foreignKey: 'cliente_id',

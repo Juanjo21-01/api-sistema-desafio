@@ -157,8 +157,6 @@ export const cambiarEstadoOrden = async (req, res) => {
         .json({ mensaje: 'No se puede cambiar a pendiente una orden' });
     }
 
-    // Si el estado es 'V', insertar la venta correspondiente
-
     // Procedimiento almacenado
     const procedimiento = 'EXEC sp_cambiar_estado_orden :id, :estado';
 

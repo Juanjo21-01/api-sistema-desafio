@@ -8,7 +8,6 @@ import rutaProveedores from './routes/proveedores.routes.js';
 import rutaTipoProductos from './routes/tipoProductos.routes.js';
 import rutaProductos from './routes/productos.routes.js';
 import rutaCompras from './routes/compras.routes.js';
-import rutaVentas from './routes/ventas.routes.js';
 import rutaOrdenes from './routes/ordenes.routes.js';
 import rutaAuth from './routes/auth.routes.js';
 
@@ -46,8 +45,6 @@ app.use('/api/tipo-productos', rutaTipoProductos);
 app.use('/api/productos', rutaProductos);
 // -> Rutas de compras
 app.use('/api/compras', rutaCompras);
-// -> Rutas de ventas
-app.use('/api', rutaVentas);
 // -> Rutas de órdenes
 app.use('/api/ordenes', rutaOrdenes);
 
