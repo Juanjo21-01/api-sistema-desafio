@@ -6,7 +6,7 @@ export const obtenerOrdenes = async (req, res) => {
     // Consulta
     const ordenes = await db.Orden.findAll({
       attributes: {
-        exclude: ['observaciones', 'fecha_registro'],
+        exclude: ['fecha_registro'],
       },
     });
 
@@ -77,15 +77,15 @@ export const obtenerOrden = async (req, res) => {
 // Crear una orden con su detalle
 export const crearOrden = async (req, res) => {
   try {
-    const { fecha_orden, cliente_id, observaciones, detalles } = req.body;
+    const { fecha_orden, cliente_id, detalles } = req.body;
 
     // Procedimiento almacenado de la orden
     const procedimientoOrden =
-      'EXEC sp_insertar_orden :fecha_orden, :cliente_id, :estado, :observaciones';
+      'EXEC sp_insertar_orden :fecha_orden, :cliente_id, :estado';
 
     // Crear la orden
     await db.sequelize.query(procedimientoOrden, {
-      replacements: { fecha_orden, cliente_id, estado: 'P', observaciones },
+      replacements: { fecha_orden, cliente_id, estado: 'P' },
     });
 
     // Obtener la orden creada
@@ -135,7 +135,7 @@ export const cambiarEstadoOrden = async (req, res) => {
       return res.status(404).json({ mensaje: 'Orden no encontrada' });
     }
 
-    //
+    // Validar el estado
     if (!['P', 'V', 'R'].includes(req.body.estado)) {
       return res
         .status(400)
@@ -171,6 +171,63 @@ export const cambiarEstadoOrden = async (req, res) => {
     res.status(200).json(orden);
   } catch (error) {
     console.error('Error al cambiar el estado de la orden:', error);
+    res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
+// Crear el responsable de la orden
+export const crearResponsableOrden = async (req, res) => {
+  try {
+    const { orden_id, encargado_id, observaciones } = req.body;
+
+    // Consulta
+    const orden = await db.Orden.findByPk(orden_id);
+    const usuario = await db.Usuario.findByPk(encargado_id);
+
+    // Validaciones
+    if (!orden) {
+      return res.status(404).json({ mensaje: 'Orden no encontrada' });
+    }
+    if (!usuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+
+    // Si la orden está pendiente
+    if (orden.estado === 'P') {
+      return res.status(400).json({
+        mensaje: 'No se puede asignar un responsable a una orden pendiente',
+      });
+    }
+
+    // Si la orden ya tiene un responsable asignado
+    const responsableOrden = await db.ResponsableOrden.findByPk(orden_id);
+
+    if (responsableOrden) {
+      return res
+        .status(400)
+        .json({ mensaje: 'La orden ya tiene un responsable asignado' });
+    }
+
+    const procedimiento =
+      'EXEC sp_insertar_responsable_orden :orden_id, :encargado_id , :observaciones';
+
+    // Crear el responsable
+    await db.sequelize.query(procedimiento, {
+      replacements: { orden_id, encargado_id, observaciones },
+    });
+
+    // Obtener el responsable creado
+    const encargado = await db.ResponsableOrden.findOne({
+      where: { orden_id },
+    });
+
+    // Respuesta
+    res.status(201).json({
+      mensaje: 'Responsable de la orden asignado correctamente',
+      data: encargado,
+    });
+  } catch (error) {
+    console.error('Error al crear el responsable de la orden:', error);
     res.status(500).json({ mensaje: 'Error interno del servidor' });
   }
 };

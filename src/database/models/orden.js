@@ -21,6 +21,12 @@ export default (sequelize, DataTypes) => {
         foreignKey: 'orden_id',
         as: 'detalle_ordenes',
       });
+
+      // Relación uno a uno con responsable de ordenes
+      Orden.hasOne(models.ResponsableOrden, {
+        foreignKey: 'orden_id',
+        as: 'responsable_ordenes',
+      });
     }
   }
 
@@ -42,10 +48,6 @@ export default (sequelize, DataTypes) => {
         validate: {
           isIn: [['P', 'R', 'V']],
         },
-      },
-      observaciones: {
-        type: DataTypes.STRING(200),
-        allowNull: true,
       },
       fecha_registro: {
         type: 'DATETIME',

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { verificarToken, verificarRol } from '../middlewares/authMiddleware.js';
 import {
   crearOrden,
+  crearResponsableOrden,
   obtenerOrden,
   obtenerOrdenes,
   cambiarEstadoOrden,
@@ -9,21 +10,24 @@ import {
 
 const router = Router();
 
-// GET - Obtener todas las órdenes 
+// GET - Obtener todas las órdenes
 router.get('/', verificarToken, verificarRol([1, 2, 3]), obtenerOrdenes);
 
-// GET - Obtener una orden por ID con su detalle 
+// GET - Obtener una orden por ID con su detalle
 router.get('/:id', verificarToken, verificarRol([1, 2, 3]), obtenerOrden);
 
-// POST - Crear una orden con su detalle 
+// POST - Crear una orden con su detalle
 router.post('/', verificarToken, verificarRol([1, 2, 3]), crearOrden);
 
-// PATCH - Actualizar estado de una orden 
+// PATCH - Actualizar estado de una orden
 router.patch(
   '/cambiarEstado/:id',
   verificarToken,
   verificarRol([1, 2]),
   cambiarEstadoOrden
 );
+
+// POST - Crear un responsable de orden
+router.post('/responsable', verificarToken, verificarRol([1, 2]), crearResponsableOrden);
 
 export default router;

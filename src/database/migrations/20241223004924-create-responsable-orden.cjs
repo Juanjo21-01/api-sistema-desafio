@@ -2,21 +2,20 @@
 
 /** @type {import('sequelize-cli').Migration} */
 
-// Migración de la tabla de ordenes
+// Migración de la tabla de responsable de ordenes
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ordenes', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
+    await queryInterface.createTable('responsable_ordenes', {
+      orden_id: {
         type: Sequelize.INTEGER,
-      },
-      fecha_orden: {
-        type: Sequelize.DATEONLY,
         allowNull: false,
+        primaryKey: true,
+        references: {
+          model: 'ordenes',
+          key: 'id',
+        },
       },
-      cliente_id: {
+      encargado_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -24,10 +23,9 @@ module.exports = {
           key: 'id',
         },
       },
-      estado: {
-        type: Sequelize.CHAR(1),
-        allowNull: false,
-        defaultValue: 'P',
+      observaciones: {
+        type: Sequelize.STRING(200),
+        allowNull: true,
       },
       fecha_registro: {
         type: 'DATETIME',
@@ -38,6 +36,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('ordenes');
+    await queryInterface.dropTable('responsable_ordenes');
   },
 };
