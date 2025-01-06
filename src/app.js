@@ -2,6 +2,7 @@ import { config } from 'dotenv';
 import process from 'process';
 import express, { json } from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import rutaRoles from './routes/roles.routes.js';
 import rutaUsuarios from './routes/usuarios.routes.js';
 import rutaProveedores from './routes/proveedores.routes.js';
@@ -16,6 +17,16 @@ config();
 
 // Crear servidor
 const app = express();
+
+// CORS
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  })
+);
 
 // Middleware para convertir el body en JSON
 app.use(json());

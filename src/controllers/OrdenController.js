@@ -61,9 +61,28 @@ export const obtenerOrden = async (req, res) => {
       };
     }
 
+    // Consulta al responsable de la orden
+    const responsableOrden = await db.ResponsableOrden.findOne({
+      where: { orden_id: id },
+    });
+
+    // Traer el nombre del encargado
+    if (responsableOrden) {
+      const encargado = await db.Usuario.findByPk(
+        responsableOrden.encargado_id
+      );
+      responsableOrden.encargado_id = {
+        id: encargado.id,
+        nombres: encargado.nombres + ' ' + encargado.apellidos,
+      };
+
+      orden.responsable = responsableOrden;
+    }
+
     const ordenDetalle = {
       ...orden.toJSON(),
       detalle: detalleOrden,
+      encargado: responsableOrden,
     };
 
     // Respuesta
