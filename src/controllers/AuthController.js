@@ -16,7 +16,7 @@ export const login = async (req, res) => {
     const usuario = await db.Usuario.findOne({
       where: { email },
       attributes: {
-        exclude: ['fecha_nacimiento', 'fecha_registro'],
+        exclude: ['fecha_registro'],
       },
     });
 
@@ -44,8 +44,6 @@ export const login = async (req, res) => {
     // Ocultar valores
     usuario.password = undefined;
     usuario.estado = undefined;
-    usuario.direccion = undefined;
-    usuario.telefono = undefined;
 
     // Respuesta
     res.status(200).json({
