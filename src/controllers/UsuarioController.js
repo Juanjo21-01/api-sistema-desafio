@@ -34,6 +34,14 @@ export const obtenerUsuario = async (req, res) => {
       return res.status(404).json({ mensaje: 'Usuario no encontrado' });
     }
 
+    // Agregar el nombre del rol
+    const rol = await db.Role.findByPk(usuario.rol_id);
+
+    usuario.rol_id = {
+      id: rol.id,
+      nombre: rol.nombre,
+    };
+
     // Respuesta
     res.status(200).json(usuario);
   } catch (error) {
