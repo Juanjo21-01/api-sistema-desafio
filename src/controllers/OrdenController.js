@@ -93,6 +93,60 @@ export const obtenerOrden = async (req, res) => {
   }
 };
 
+// Obtener una orden por cliente ID con su detalle
+export const obtenerOrdenesCliente = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Consulta
+    const ordenes = await db.Orden.findAll({
+      where: { cliente_id: id },
+      attributes: {
+        exclude: ['fecha_registro'],
+      },
+    });
+
+    // Array para almacenar las órdenes con sus detalles
+    const ordenesConDetalle = [];
+
+    // Traer el detalle de cada orden
+    for (const orden of ordenes) {
+      // Traer el nombre del cliente
+      const cliente = await db.Usuario.findByPk(orden.cliente_id);
+      orden.cliente_id = {
+        id: cliente.id,
+        nombres: cliente.nombres + ' ' + cliente.apellidos,
+      };
+
+      // Traer el detalle de la orden
+      const detalleOrden = await db.DetalleOrden.findAll({
+        where: { orden_id: orden.id },
+      });
+
+      // Traer el nombre del producto para cada detalle
+      for (const detalle of detalleOrden) {
+        const producto = await db.Producto.findByPk(detalle.producto_id);
+        detalle.producto_id = {
+          id: producto.id,
+          nombre: producto.nombre,
+        };
+      }
+
+      // Agregar la orden con su detalle al array
+      ordenesConDetalle.push({
+        ...orden.toJSON(),
+        detalle: detalleOrden,
+      });
+    }
+
+    // Respuesta
+    res.status(200).json(ordenesConDetalle);
+  } catch (error) {
+    console.error('Error al obtener las órdenes del cliente:', error);
+    res.status(500).json({ mensaje: 'Error interno del servidor' });
+  }
+};
+
 // Crear una orden con su detalle
 export const crearOrden = async (req, res) => {
   try {
